@@ -6,9 +6,15 @@ spring:
 server:
   baseUrl: http://localhost:8080/
   imageUrl: student/images/
-  imageServerDir: c:/bitbucket/images/
-
-
+  imageServerDir: C:/Users/CAMT/Documents/SE331-lab10/ng-app/images/
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 604800
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
 ---
 spring:
   profiles: inMemoryDB
