@@ -3,10 +3,14 @@ spring:
     active:
       - DBDataSource
       - inMemoryDB
+  http:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 server:
   baseUrl: http://localhost:8080/
   imageUrl: student/images/
-  imageServerDir: C:/Users/CAMT/Documents/SE331-lab10/ng-app/images/
+  imageServerDir: C:/Users/Admin/Documents/GitHub/SE331-lab11/ng-app/images/
 jwt:
   header: Authorization
   secret: mySecret

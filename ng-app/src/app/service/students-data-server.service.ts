@@ -2,16 +2,17 @@ import {Injectable} from '@angular/core';
 import {Student} from '../students/student';
 import {Http, Headers, Response, RequestOptions} from '@angular/http';
 import {Observable} from "rxjs/Rx";
-import {AuthenticationService} from "./authentication.service";
+import {AuthenticationService} from './authentication.service';
 
 
 @Injectable()
 export class StudentsDataServerService {
-  constructor(private http: Http,private  authenticationService : AuthenticationService) {
+  constructor(private http: Http, private authenticationService: AuthenticationService) {
   }
+
   private headers = new Headers({
-    'Content-Type': 'application/json',
-    'Authentication' : 'Bearer ' + this.authenticationService.getToken()
+    'Content-type': 'application/json',
+    'Authorization': 'Bearer ' + this.authenticationService.getToken()
   });
 
   getStudentsData() {
@@ -23,7 +24,7 @@ export class StudentsDataServerService {
 
   getStudent(id: number) {
     let student: Student;
-    return this.http.get('http://localhost:8080/student/' + id)
+    return this.http.get('http://localhost:8080/student/' + id,({headers:this.headers}))
       .map((res: Response) => {
         if (res) {
           if (res.status === 200) {
@@ -72,13 +73,13 @@ export class StudentsDataServerService {
     let fileName: string;
 
     formData.append('file', file);
-    let header = new Headers({'Authentication' : 'Bearer ' + this.authenticationService.getToken()});
+    let header = new Headers({'Authorization': 'Bearer ' + this.authenticationService.getToken()});
     let options = new RequestOptions({headers: header});
     return this.http.post('http://localhost:8080/student/image', formData,options)
       .flatMap(filename => {
         student.image = filename.text();
         let headers = new Headers({'Content-Type': 'application/json',});
-        let options = new RequestOptions({headers : this.headers});
+        let options = new RequestOptions({headers: this.headers});
         let body = JSON.stringify(student);
         return this.http.post('http://localhost:8080/student', body, options)
           .map(res => {

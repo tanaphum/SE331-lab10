@@ -28,6 +28,7 @@ public class Authority {
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private List<User> users;
+
     public Long getId() {
         return id;
     }

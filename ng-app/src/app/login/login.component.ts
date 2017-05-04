@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../service/authentication.service";
-import {error} from "selenium-webdriver";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +13,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   error='';
   constructor(private router: Router,
-  private authenticationService : AuthenticationService) { }
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     //reset login status
@@ -22,22 +21,20 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.loading = true;
-
+    this.loading=true;
     this.authenticationService.login(this.model.username,this.model.password)
       .subscribe(result =>{
-        if(result == true) {
+        if (result === true){
           //login success
-          this.router.navigate(['courses']);
+          this.router.navigate(['courses']).then($=>window.location.reload());
         }else{
           //login failed
           this.error = 'Username or password is incorrect';
-          this.loading = false;
+          this.loading=false;
         }
       },error =>{
         this.loading = false;
         this.error = error;
       });
   }
-
 }

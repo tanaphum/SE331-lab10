@@ -54,12 +54,10 @@ public class DataLoader implements ApplicationRunner{
     }
 
     UserRepository userSecurityRepository;
-
     @Autowired
-    public void setUserRepository(UserRepository userSecurityRepository) {
+    public void setUserSecurityRepository(UserRepository userSecurityRepository) {
         this.userSecurityRepository = userSecurityRepository;
     }
-
     AuthorityRepository authorityRepository;
 
     @Autowired
@@ -99,11 +97,11 @@ public class DataLoader implements ApplicationRunner{
         student3.addCourse(course1);
         student3.addCourse(course3);
 
-        securitySetup ();
+        securitySetup();
+
 
     }
-
-    public void securitySetup (){
+    private void securitySetup() {
         User user1 = User.builder()
                 .username("admin")
                 .password("admin")
@@ -111,7 +109,7 @@ public class DataLoader implements ApplicationRunner{
                 .lastname("admin")
                 .email("admin@admin.com")
                 .enabled(true)
-                .lastPasswordResetDate(Date.from(LocalDate.of(2016,01,01).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .lastPasswordResetDate(Date.from(LocalDate.of(2016, 01, 01).atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
 
         User user2 = User.builder()
@@ -121,7 +119,7 @@ public class DataLoader implements ApplicationRunner{
                 .lastname("user")
                 .email("enabled@user.com")
                 .enabled(true)
-                .lastPasswordResetDate(Date.from(LocalDate.of(2016,01,01).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .lastPasswordResetDate(Date.from(LocalDate.of(2016, 01, 01).atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
         User user3 = User.builder()
                 .username("disabled")
@@ -130,25 +128,23 @@ public class DataLoader implements ApplicationRunner{
                 .lastname("user")
                 .email("disabled@user.com")
                 .enabled(false)
-                .lastPasswordResetDate(Date.from(LocalDate.of(2016,01,01).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .lastPasswordResetDate(Date.from(LocalDate.of(2016, 01, 01).atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
-        Authority authl = Authority.builder().name(AuthorityName.ROLE_USER).build();
 
+        Authority auth1 = Authority.builder().name(AuthorityName.ROLE_USER).build();
         Authority auth2 = Authority.builder().name(AuthorityName.ROLE_ADMIN).build();
-
-        authorityRepository.save(authl);
+        authorityRepository.save(auth1);
         authorityRepository.save(auth2);
         user1.setAuthorities(new ArrayList<>());
-        user1.getAuthorities().add(authl);
+        user1.getAuthorities().add(auth1);
         user1.getAuthorities().add(auth2);
         user2.setAuthorities(new ArrayList<>());
-        user2.getAuthorities().add(authl);
+        user2.getAuthorities().add(auth1);
         user3.setAuthorities(new ArrayList<>());
-        user3.getAuthorities().add(authl);
+        user3.getAuthorities().add(auth1);
 
         userSecurityRepository.save(user1);
         userSecurityRepository.save(user2);
         userSecurityRepository.save(user3);
-
     }
 }

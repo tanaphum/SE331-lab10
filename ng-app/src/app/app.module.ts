@@ -19,8 +19,8 @@ import {AddCourseComponent} from './course/add-course/add-course.component';
 import {ListCourseComponent} from './course/list-course/list-course.component';
 import {CourseServerService} from './service/course-server.service';
 import {CourseRoutingModule} from './course/course-routing.module';
-import { LoginComponent } from './login/login.component';
-import {AuthenticationService} from "./service/authentication.service";
+import {LoginComponent} from './login/login.component';
+import {AuthenticationService} from './service/authentication.service';
 
 
 @NgModule({
@@ -41,7 +41,8 @@ import {AuthenticationService} from "./service/authentication.service";
   providers: [{provide: StudentsDataService, useClass: StudentsDataServerService},
     // {provide: LocationStrategy, useClass: HashLocationStrategy},
     CourseServerService,
-    AuthenticationService]
+    AuthenticationService
+  ]
 })
 export class AppModule {
 }
